@@ -1,0 +1,16 @@
+# Data directories (persist locally, not in git)
+port-mcp-data/
+port-mcp-logs/
+enforcer-snapshots/
+enforcer-data/
+
+# Log files
+*.log
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
