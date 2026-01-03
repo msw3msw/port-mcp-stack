@@ -1,0 +1,46 @@
+version: '3.8'
+
+services:
+  port-mcp:
+    image: msw3msw/port-mcp:latest
+    container_name: port-mcp
+    ports:
+      - "4100:4100"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - ./port-mcp-data:/data
+      - ./port-mcp-logs:/logs
+    environment:
+      - PORT=4100
+      - MCP_MODE=prod
+    restart: unless-stopped
+    networks:
+      - port-mcp-net
+    labels:
+      - "net.unraid.docker.icon=https://raw.githubusercontent.com/msw3msw/port-mcp-stack/main/icons/port-mcp.png"
+      - "net.unraid.docker.webui=http://[IP]:[PORT:4100]"
+
+  port-mcp-enforcer:
+    image: msw3msw/port-mcp-enforcer:latest
+    container_name: port-mcp-enforcer
+    ports:
+      - "4200:4200"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ./enforcer-snapshots:/app/snapshots
+      - ./enforcer-data:/app/src/ui/web/data
+    environment:
+      - PORT_MCP_URL=http://port-mcp:4100
+      - HOST_IP=192.168.0.100
+    depends_on:
+      - port-mcp
+    restart: unless-stopped
+    networks:
+      - port-mcp-net
+    labels:
+      - "net.unraid.docker.icon=https://raw.githubusercontent.com/msw3msw/port-mcp-stack/main/icons/port-mcp-enforcer.png"
+      - "net.unraid.docker.webui=http://[IP]:[PORT:4200]"
+
+networks:
+  port-mcp-net:
+    driver: bridge
