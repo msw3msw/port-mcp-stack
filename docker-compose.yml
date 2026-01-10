@@ -21,7 +21,7 @@ services:
       - "net.unraid.docker.webui=http://[IP]:[PORT:4100]"
 
   port-mcp-enforcer:
-    image: msw3msw/port-mcp-enforcer:1.0.3
+    image: msw3msw/port-mcp-enforcer:1.0.4
     container_name: port-mcp-enforcer
     ports:
       - "4200:4200"
