@@ -1,4 +1,4 @@
-version: '3.8'
+version: "3.8"
 
 services:
   port-mcp:
@@ -21,7 +21,7 @@ services:
       - "net.unraid.docker.webui=http://[IP]:[PORT:4100]"
 
   port-mcp-enforcer:
-    image: msw3msw/port-mcp-enforcer:latest
+    image: msw3msw/port-mcp-enforcer:1.0.3
     container_name: port-mcp-enforcer
     ports:
       - "4200:4200"
